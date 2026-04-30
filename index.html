@@ -39,7 +39,7 @@
             border: 1px solid #aaa;
         }
 
-        /* Main Pass */
+        /* Left Side: Main Ticket */
         .main-section {
             flex: 2.5;
             padding: 35px;
@@ -47,7 +47,7 @@
             position: relative;
         }
 
-        /* Stub Section */
+        /* Right Side: Stub */
         .stub-section {
             flex: 1;
             padding: 35px;
@@ -64,12 +64,7 @@
             margin-bottom: 25px;
         }
 
-        .logo {
-            font-weight: 900;
-            font-size: 24px;
-            letter-spacing: 1px;
-            color: var(--airline-blue);
-        }
+        .logo { font-weight: 900; font-size: 24px; color: var(--airline-blue); }
 
         .info-grid {
             display: grid;
@@ -87,37 +82,40 @@
             margin-bottom: 4px;
         }
 
-        .value {
-            font-size: 17px;
-            font-weight: bold;
-            color: #333;
-        }
+        .value { font-size: 17px; font-weight: bold; color: #333; }
 
-        /* Flight Icon/Path */
-        .path {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-        }
-
-        .path-line {
-            flex: 1;
-            height: 2px;
-            background: repeating-linear-gradient(90deg, #ccc, #ccc 5px, transparent 5px, transparent 10px);
-        }
-
+        /* Path Graphics */
+        .path { display: flex; align-items: center; margin: 25px 0; }
+        .path-line { flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #ccc, #ccc 5px, transparent 5px, transparent 10px); }
         .plane-icon { font-size: 22px; margin: 0 15px; transform: rotate(45deg); }
+
+        /* Countdown Style */
+        .countdown-container {
+            margin-top: 25px;
+            padding: 15px;
+            background: var(--airline-blue);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #countdown {
+            color: var(--accent-gold);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
 
         .barcode {
             font-family: 'Libre Barcode 128', cursive;
-            font-size: 65px;
+            font-size: 60px;
             margin-top: 25px;
             display: block;
             color: #000;
         }
 
-        /* Forms */
-        select, button {
+        /* RSVP Form */
+        input, select, button {
             width: 100%;
             padding: 12px;
             margin-top: 8px;
@@ -133,10 +131,10 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            transition: background 0.3s ease;
+            transition: 0.3s ease;
         }
 
-        .btn:hover { background: var(--accent-gold); color: #000; }
+        .btn:hover { background: var(--accent-gold); color: #1e272e; }
 
         @media (max-width: 700px) {
             .boarding-pass { flex-direction: column; }
@@ -151,18 +149,18 @@
         <!-- Main Section -->
         <div class="main-section">
             <div class="header">
-                <div class="logo">LOVE AIRLINES</div>
+                <div class="logo">UNION AIRWAYS ✈️</div>
                 <div style="font-size: 10px; font-weight: bold; color: var(--accent-gold);">FIRST CLASS</div>
             </div>
 
             <div class="info-grid">
                 <div>
                     <span class="label">Passenger</span>
-                    <span class="value">A Valued Guest</span>
+                    <span class="value">Our Favorite Guest</span>
                 </div>
                 <div>
-                    <span class="label">Seat</span>
-                    <span class="value">Row 01A</span>
+                    <span class="label">Flight No.</span>
+                    <span class="value">LOVE-2026</span>
                 </div>
             </div>
 
@@ -172,7 +170,7 @@
                     <span class="label">Singlehood</span>
                 </div>
                 <div class="path-line"></div>
-                <div class="plane-icon">✈️</div>
+                <div class="plane-icon">🛫</div>
                 <div class="path-line"></div>
                 <div style="text-align: center;">
                     <div class="value" style="font-size: 24px;">MRG</div>
@@ -182,54 +180,75 @@
 
             <div class="info-grid">
                 <div>
-                    <span class="label">Date</span>
-                    <span class="value">August 24, 2026</span>
+                    <span class="label">Gate / Venue</span>
+                    <span class="value">The Grand Plaza</span>
                 </div>
                 <div>
                     <span class="label">Boarding Time</span>
-                    <span class="value">05:30 PM</span>
+                    <span class="value">05:00 PM</span>
                 </div>
-                <div>
-                    <span class="label">Gate</span>
-                    <span class="value">The Crystal Palace</span>
-                </div>
-                <div>
-                    <span class="label">Flight No.</span>
-                    <span class="value">WED-2026</span>
-                </div>
+            </div>
+
+            <!-- LIVE COUNTDOWN -->
+            <div class="countdown-container">
+                <div class="label" style="color: white; opacity: 0.7;">Time Until Boarding</div>
+                <div id="countdown">Calculating...</div>
             </div>
 
             <div class="barcode">WEDDINGINVITATION2026</div>
         </div>
 
-        <!-- Stub Section -->
+        <!-- RSVP Stub Section -->
         <div class="stub-section">
-            <div class="label" style="margin-bottom: 20px;">Confirm Attendance</div>
+            <div class="label" style="margin-bottom: 20px;">Passenger Check-In</div>
             
-            <form action="" method="POST">
-                <label class="label">Check-In Status</label>
-                <select name="status">
-                    <option value="Yes">Ready for Boarding</option>
-                    <option value="No">Flight Cancelled</option>
+            <!-- Replace 'YOUR_FORMSPREE_ID' with your actual Formspree ID -->
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+                <input type="text" name="name" placeholder="Enter Full Name" required>
+                
+                <label class="label" style="margin-top: 15px; display: block;">Attendance</label>
+                <select name="status" required>
+                    <option value="Confirmed">Ready for Boarding</option>
+                    <option value="Declined">Flight Cancelled</option>
                 </select>
 
-                <label class="label" style="margin-top: 15px; display: block;">Meal Selection</label>
+                <label class="label" style="margin-top: 15px; display: block;">Meal Choice</label>
                 <select name="meal">
-                    <option>Standard (Meat)</option>
-                    <option>Vegetarian</option>
-                    <option>No Preference</option>
+                    <option value="Meat">Standard (Chicken)</option>
+                    <option value="Veg">Vegetarian</option>
                 </select>
 
-                <button type="submit" class="btn">CHECK-IN NOW</button>
+                <button type="submit" class="btn">CONFIRM CHECK-IN</button>
             </form>
-
-            <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px;">
-                <span class="label">Ticket Status</span>
-                <span class="value" style="font-size: 12px; color: #27ae60;">VALID</span>
-            </div>
+            
+            <p style="font-size: 9px; margin-top: 20px; color: #999;">Check-in closes 1 month before departure.</p>
         </div>
     </div>
 </div>
+
+<script>
+    // --- LIVE COUNTDOWN LOGIC ---
+    // Change this date to your wedding date!
+    var countDownDate = new Date("Aug 24, 2026 17:00:00").getTime();
+
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "WE ARE MARRIED! ✈️";
+        }
+    }, 1000);
+</script>
 
 </body>
 </html>
